@@ -19,7 +19,7 @@ export function BalanceCard() {
     useEffect(() => {
         const fetchSpending = async () => {
             try {
-                const transactions: Transaction[] = await apiGet("/transactions");
+                const transactions: Transaction[] = await apiGet("/trxn/transactions");
                 const now = new Date();
                 const thisMonth = now.getMonth();
                 const thisYear = now.getFullYear();

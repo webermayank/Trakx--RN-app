@@ -21,6 +21,13 @@ export default function ProfileScreen() {
                     Manage your account settings and preferences here
                 </Text>
 
+                <Pressable
+                    style={styles.secondaryButton}
+                    onPress={() => router.push("/(app)/sms-debug" as never)}
+                >
+                    <Text style={styles.secondaryButtonText}>Open SMS Debug</Text>
+                </Pressable>
+
                 <Pressable style={styles.logoutButton} onPress={signOut}>
                     <Text style={styles.logoutText}>Logout</Text>
                 </Pressable>
@@ -67,8 +74,20 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 20,
         borderRadius: 10,
+        marginTop: 12,
     },
     logoutText: {
+        color: "#fff",
+        fontSize: 16,
+        fontWeight: "600",
+    },
+    secondaryButton: {
+        backgroundColor: colors.blue,
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 10,
+    },
+    secondaryButtonText: {
         color: "#fff",
         fontSize: 16,
         fontWeight: "600",

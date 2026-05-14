@@ -80,6 +80,13 @@ export default function AppLayout() {
                     ),
                 }}
             />
+
+            <Tabs.Screen
+                name="sms-debug"
+                options={{
+                    href: null,
+                }}
+            />
         </Tabs>
     );
 }
