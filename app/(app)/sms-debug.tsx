@@ -1,4 +1,5 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { router } from "expo-router";
 import { useSmsDebug } from "../../src/features/sms/hooks";
 import { colors } from "../../src/theme/colors";
 
@@ -20,7 +21,7 @@ export default function SmsDebugScreen() {
     error,
     reload,
     importMessages,
-  } = useSmsDebug(6);
+  } = useSmsDebug(12);
 
   const previewMessages = transactionalMessages.slice(0, 30);
 
@@ -28,7 +29,7 @@ export default function SmsDebugScreen() {
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.title}>SMS Import</Text>
       <Text style={styles.subtitle}>
-        Reads the last 6 months of SMS, filters likely transaction messages, and imports them.
+        Reads the last 1 year of SMS, filters likely transaction messages, and imports them.
       </Text>
 
       <View style={styles.card}>
@@ -37,11 +38,19 @@ export default function SmsDebugScreen() {
         </Text>
         <Text style={styles.meta}>Messages loaded: {messages.length}</Text>
         <Text style={styles.meta}>Transaction-like SMS: {transactionalMessages.length}</Text>
+        <Text style={styles.hint}>
+          If import skips messages with "Account could not be detected", first add accounts like
+          `SBI 7445` or `HDFC 1234`.
+        </Text>
         {error ? <Text style={styles.error}>{error}</Text> : null}
+
+        <Pressable style={styles.manageButton} onPress={() => router.push("/(app)/accounts" as never)}>
+          <Text style={styles.buttonText}>Manage Accounts</Text>
+        </Pressable>
 
         <Pressable style={styles.button} onPress={reload} disabled={loading}>
           <Text style={styles.buttonText}>
-            {loading ? "Loading..." : "Reload 6 Months"}
+            {loading ? "Loading..." : "Reload 1 Year"}
           </Text>
         </Pressable>
 
@@ -73,7 +82,7 @@ export default function SmsDebugScreen() {
       <Text style={styles.section}>Preview of importable SMS</Text>
       {previewMessages.length === 0 ? (
         <View style={styles.smsCard}>
-          <Text style={styles.body}>No transaction-like SMS found in the last 6 months.</Text>
+          <Text style={styles.body}>No transaction-like SMS found in the last 1 year.</Text>
         </View>
       ) : (
         previewMessages.map((message) => (
@@ -126,6 +135,19 @@ const styles = StyleSheet.create({
   error: {
     color: colors.red,
     fontSize: 14,
+  },
+  hint: {
+    color: colors.muted,
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  manageButton: {
+    backgroundColor: colors.surface,
+    borderRadius: 10,
+    paddingVertical: 12,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#334155",
   },
   button: {
     backgroundColor: colors.blue,
